@@ -9,10 +9,10 @@ require_once('../actions/connection.php');
 $user = new User($conn);
 if ($user->create($_POST)) {
     // echo "Success";
-    header("Location: http://localhost/stripe-sample-code/login.php?success=1");
+    header("Location: http://localhost/stripe-sample-code/users/login.php?success=1");
     exit();
 } else {
-    header("Location: http://localhost/stripe-sample-code/login.php?success=0");
+    header("Location: http://localhost/stripe-sample-code/users/login.php?success=0");
     exit();
 }
 // print_r($_POST);

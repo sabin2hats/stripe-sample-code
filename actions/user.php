@@ -59,53 +59,80 @@ class User
 
     function create($data = null)
     {
+        try {
+            $this->conn->beginTransaction();
+            // query to insert record
 
-        // query to insert record
-
-        $query = "INSERT INTO
+            $query = "INSERT INTO
                 users
             SET
-                name=:name, email=:email, phone=:phone, address=:address, password=:password ,created_at=:created_at";
+                name=:name, email=:email, phone=:phone, password=:password ,created_at=:created_at";
 
-        // prepare query
-        $stmt = $this->conn->prepare($query);
+            // prepare query
+            $stmt = $this->conn->prepare($query);
 
-        // sanitize
-        $name = htmlspecialchars(strip_tags($data['name']));
-        $email = htmlspecialchars(strip_tags($data['email']));
-        $phone = htmlspecialchars(strip_tags($data['phone']));
-        $address = htmlspecialchars(strip_tags($data['address']));
-        $password = sha1($data['psw']);
+            // sanitize
+            $name = htmlspecialchars(strip_tags($data['name']));
+            $email = htmlspecialchars(strip_tags($data['email']));
+            $phone = htmlspecialchars(strip_tags($data['phone']));
+            $password = sha1($data['psw']);
 
-        // bind values
-        $stmt->bindParam(":name", $name);
-        $stmt->bindParam(":email", $email);
-        $stmt->bindParam(":phone", $phone);
-        $stmt->bindParam(":address", $address);
-        $stmt->bindParam(":password", $password);
-        $stmt->bindParam(":created_at", date('Y-m-d'));
-        // execute query
-        if ($stmt->execute()) {
-            return true;
+            // bind values
+            $stmt->bindParam(":name", $name);
+            $stmt->bindParam(":email", $email);
+            $stmt->bindParam(":phone", $phone);
+            $stmt->bindParam(":password", $password);
+            $stmt->bindParam(":created_at", date('Y-m-d'));
+            // execute query
+            $stmt->execute();
+
+            $id = $this->conn->lastInsertId();
+            // $id = 1;
+            $query2 = "INSERT INTO
+                user_address
+            SET
+                user_id=:user_id, line1=:line1, line2=:line2, country_code=:country_code ,state=:state,city=:city,zipcode=:zipcode";
+
+            // prepare query
+            $stmt2 = $this->conn->prepare($query2);
+
+            // sanitize
+            $line1 = htmlspecialchars(strip_tags($data['line1']));
+            $line2 = htmlspecialchars(strip_tags($data['line2']));
+            $country_code = htmlspecialchars(strip_tags($data['country']));
+            $state = htmlspecialchars(strip_tags($data['state']));
+            $city = htmlspecialchars(strip_tags($data['city']));
+            $zipcode = htmlspecialchars(strip_tags($data['zipcode']));
+
+            // bind values
+            $stmt2->bindParam(":user_id", $id);
+            $stmt2->bindParam(":line1", $line1);
+            $stmt2->bindParam(":line2", $line2);
+            $stmt2->bindParam(":country_code", $country_code);
+            $stmt2->bindParam(":state", $state);
+            $stmt2->bindParam(":city", $city);
+            $stmt2->bindParam(":zipcode", $zipcode);
+            $stmt2->execute();
+            // if ($stmt2->execute()) {
+            //     return true;
+            // } else {
+            //     echo 'Error occurred:' . implode(":", $stmt2->errorInfo());
+            //     die;
+            // }
+
+
+
+            if ($this->conn->commit()) {
+                return true;
+            }
+        } catch (Exception $e) {
+
+            $this->conn->rollBack();
+            // return false;
+            echo "Failed: " . $e->getMessage();
+            die;
         }
-
         return false;
-    }
-    function login($data = null)
-    {
-        $psd = sha1($data['psw']);
-        $query = "SELECT * FROM users WHERE email = :email AND password = :password ";
-
-        // prepare query statement
-        $stmt = $this->conn->prepare($query);
-
-        // bind id of product to be updated
-        $stmt->bindParam(':email', $data['email']);
-        $stmt->bindParam(':password', $psd);
-        // print_r($stmt);
-        // execute query
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     function get_countries()
     {

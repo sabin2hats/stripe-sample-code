@@ -10,6 +10,6 @@ try {
         // echo "Connected to the <strong>$db</strong> database successfully!";
     }
 } catch (PDOException $e) {
-
+    $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     echo $e->getMessage();
 }

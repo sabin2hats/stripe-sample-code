@@ -45,7 +45,6 @@ async function handleSubmit(e) {
   setLoading(true);
   var cst_name = document.getElementById("cst_name").value;
   var cst_email = document.getElementById("cst_email").value;
-  var country = document.getElementById("Field-countryInput").value;
   var line1 = document.getElementById("line1").value;
   var line2 = document.getElementById("line2").value;
   var city = document.getElementById("city").value;
@@ -62,7 +61,7 @@ async function handleSubmit(e) {
           email: cst_email,
           address: {
             "city": city,
-            "country": country,
+            // "country": country,
             "line1": line1,
             "line2": line2,
             "postal_code": zip,

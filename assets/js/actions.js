@@ -1,10 +1,11 @@
 
-$("#payment-form").on('change', '#Field-countryInput', function() {
-    alert("in");
-});
+// $("#payment-form").on('change', '#Field-countryInput', function() {
+//     alert("in");
+// });
 
-$("#Field-countryInput").change(function(){
+$('select[name="country"]').change(function(){
     // alert($("#state").val());
+    alert("in");
     get_state($("#Field-countryInput").val());
 })
 function get_state(country_code="IN"){
