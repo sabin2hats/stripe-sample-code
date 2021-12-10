@@ -43,6 +43,7 @@ try {
 
     $output = [
         'clientSecret' => $paymentIntent->client_secret,
+        'id' => $paymentIntent->id
     ];
 
     echo json_encode($output);

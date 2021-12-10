@@ -1,3 +1,31 @@
+<?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+require '../vendor/autoload.php';
+require_once('../actions/connection.php');
+require_once('../actions/product.php');
+$pdt = new Product($conn);
+$stripe = new \Stripe\StripeClient(
+    'sk_test_51K3xsPSDQHE9e11yXhRc6GhtcjmahbH4mJek20PfyIT1fnnS2KAm3CmHMZ7ZXlYA885qR3Q4bUpUmKAhOTjT6OUA00IQc1OG1l'
+);
+$paymentDetails = $stripe->paymentIntents->retrieve(
+    $_GET['payment_intent'],
+    []
+);
+
+// echo '<pre>';
+// print_r($paymentDetails);
+$orderArray = array();
+$orderArray['orderAmount'] = $paymentDetails->amount;
+$orderArray['orderStatus'] = ($_GET['redirect_status'] == "succeeded") ? 'Success' : 'Failed';
+$orderArray['clientSecret'] = $paymentDetails->client_secret;
+$orderArray['id'] = $paymentDetails->id;
+$pdt->updateOrder($orderArray);
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

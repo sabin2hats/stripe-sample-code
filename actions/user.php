@@ -40,21 +40,25 @@ class User
     }
 
     // used when filling up the update product form
-    function readOne($id = null)
+    function readOneuser($userid = null)
     {
+        if ($userid) {
+            // query to read single record
+            $query = "SELECT * FROM `users` u
+            LEFT JOIN user_address ua ON ua.user_id = u.id 
+            where u.id=" . $userid . " ";
 
-        // query to read single record
-        $query = "SELECT * FROM `products` where id=" . $id . " ";
+            // prepare query statement
+            $stmt = $this->conn->prepare($query);
+            // execute query
+            $stmt->execute();
 
-        // prepare query statement
-        $stmt = $this->conn->prepare($query);
-        // execute query
-        $stmt->execute();
+            // get retrieved row
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // get retrieved row
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $row;
+            return $row;
+        }
+        return false;
     }
 
     function create($data = null)
@@ -134,6 +138,21 @@ class User
         }
         return false;
     }
+    function login($data)
+    {
+        $query = "SELECT * FROM users WHERE email=:email AND password=:password ";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+        $email = htmlspecialchars(strip_tags($data['email']));
+        $password = htmlspecialchars(strip_tags($data['psw']));
+        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":password", sha1($password));
+        // print_r($stmt);
+        // execute query
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
     function get_countries()
     {
         $query = "SELECT * FROM countries ";
@@ -148,13 +167,16 @@ class User
 
     function get_states_bycountry($country_code = null)
     {
-        $query = "SELECT name FROM states WHERE  country_code =" . "'$country_code'";
+        if ($country_code) {
+            $query = "SELECT name FROM states WHERE  country_code =" . "'$country_code'";
 
-        // prepare query statement
-        $stmt = $this->conn->prepare($query);
-        // print_r($stmt);
-        // execute query
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            // prepare query statement
+            $stmt = $this->conn->prepare($query);
+            // print_r($stmt);
+            // execute query
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return false;
     }
 }

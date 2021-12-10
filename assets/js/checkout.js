@@ -6,7 +6,7 @@ const stripe = Stripe("pk_test_51K3xsPSDQHE9e11yo66oFzwlAEETm1OQKpr60hoI2BcZTQU0
 var item_id = document.getElementById("product_id").value;
 const items = { id: "xl-tshirt",pdt_id: item_id };
 // console.log(JSON.stringify({ items }));
-
+var payIntid ='';
 let elements;
 
 initialize();
@@ -18,14 +18,14 @@ document
 
 // Fetches a payment intent and captures the client secret
 async function initialize() {
-  const { clientSecret } = await fetch("http://localhost/stripe-sample-code/checkout/create.php", {
+  const { clientSecret,id } = await fetch("http://localhost/stripe-sample-code/checkout/create.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ items }),
   }).then((r) => r.json());
 
   elements = stripe.elements({ clientSecret });
-
+  payIntid = id;
   // const paymentElement = elements.create("payment");
   var paymentElement = elements.create('payment', {
     fields: {
@@ -36,20 +36,63 @@ async function initialize() {
       }
     }
   });
-  
+ 
   paymentElement.mount("#payment-element");
 }
 
 async function handleSubmit(e) {
   e.preventDefault();
   setLoading(true);
+  $(".valid_address").text('');
   var cst_name = document.getElementById("cst_name").value;
   var cst_email = document.getElementById("cst_email").value;
-  var line1 = document.getElementById("line1").value;
-  var line2 = document.getElementById("line2").value;
-  var city = document.getElementById("city").value;
-  var zip = document.getElementById("zip").value;
-  var state = document.getElementById("state").value;
+  var bill_line1 = document.getElementById("bill_line1").value;
+  var bill_line2 = document.getElementById("bill_line2").value;
+  var bill_city = document.getElementById("bill_city").value;
+  var bill_zip = document.getElementById("bill_zip").value;
+  var bill_state = document.getElementById("bill_state").value; 
+  var ship_line1 = document.getElementById("ship_line1").value;
+  var ship_line2 = document.getElementById("ship_line2").value;
+  var ship_city = document.getElementById("ship_city").value;
+  var ship_zip = document.getElementById("ship_zip").value;
+  var ship_country = document.getElementById("ship_country").value; 
+  var ship_state = document.getElementById("ship_state").value; 
+  var ship_name = document.getElementById("ship_name").value; 
+  var div = document.getElementsByClassName('panel_custom');
+  var i = 0 ;
+  var formData={};
+  formData['product_id'] = items.pdt_id;
+  formData['email'] = cst_email;
+  formData['payment_intent'] = payIntid;
+  formData['client_secret'] = '';
+  $(div).find('input, select, textarea').each(function() {
+    // console.log($(this).val());
+    if(!$(this).val()){
+      var text = $(this).siblings('label').text();
+      $(this).siblings('span').text("The "+text+" is Required");
+      i++;
+    }else{
+      formData[$(this).attr('name')] = $(this).val();
+    }
+  });
+  console.log(formData);
+  if(i != 0){
+    setLoading(false);
+    return;
+  }
+  
+    if(formData){
+      $.ajax({
+        url: "../actions/ajax_requests.php",
+        method : "POST",
+        data:{function:"createOrder",formdata:JSON.stringify(formData)},
+      }).done(function( data ) {
+        //   console.log(data);
+        
+      });
+    }
+  
+  
   const { error } = await stripe.confirmPayment({
     elements,
     confirmParams: {
@@ -60,14 +103,27 @@ async function handleSubmit(e) {
           name: cst_name,
           email: cst_email,
           address: {
-            "city": city,
+            "city": bill_city,
             // "country": country,
-            "line1": line1,
-            "line2": line2,
-            "postal_code": zip,
-            "state": state
+            "line1": bill_line1,
+            "line2": bill_line2,
+            "postal_code": bill_zip,
+            "state": bill_state
           },
-        }
+        },
+        
+      },
+      shipping: {
+        name: ship_name,
+        address: {
+            line1: ship_line1,
+            line2: ship_line2,
+            city: ship_city,
+            postal_code: ship_zip,
+            state: ship_state,
+            country: ship_country,
+        },
+        
       },
     },
   });
@@ -97,7 +153,7 @@ async function checkStatus() {
   }
 
   const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
-
+console.log(paymentIntent);
   switch (paymentIntent.status) {
     case "succeeded":
       showMessage("Payment succeeded!");
