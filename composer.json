@@ -1,0 +1,16 @@
+{
+    "require": {
+        "stripe/stripe-php": "^7.105"
+    },
+    "autoload": {
+      "files": [
+        "app/libraries/Session.php",
+        "app/libraries/Core.php",
+        "app/libraries/Controller.php",
+        "app/libraries/Database.php",
+        "app/libraries/TextClean.php",
+        "app/config/config.php"
+      ]
+    }
+    
+}
