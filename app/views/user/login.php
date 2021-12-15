@@ -20,7 +20,7 @@
         <div class="col-md-6 col-md-offset-3">
             <h2>Ecommerce</h2>
 
-            <form action="<?= URLROOT ?>user/loginUser" method="post">
+            <form action="<?= URLROOT ?>user/processLoginRequest" method="post">
                 <div class="imgcontainer">
                     <img src="../public/images/img_avatar2.png" alt="Avatar" class="avatar">
                 </div>

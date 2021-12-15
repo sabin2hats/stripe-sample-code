@@ -13,13 +13,8 @@ class Product extends Controller
     public function index()
     {
 
-        $data['products'] = $this->productsModel->readAll();
+        $data['products'] = $this->productsModel->getAll();
         $data['body'] = 'products/list.php';
         $this->view('template/main.php', $data);
-    }
-    public function getState()
-    {
-        $stateList = $this->countriesModel->getStatesByCountry($_POST['countryCode']);
-        echo json_encode($stateList);
     }
 }

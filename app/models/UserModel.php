@@ -10,17 +10,7 @@ class UserModel
         $this->conn = $db;
     }
 
-    /* Test (database and table needs to exist before this works)
-        public function getUsers() {
-            $this->db->query("SELECT * FROM users");
-
-            $result = $this->db->resultSet();
-
-            return $result;
-        }
-        */
-
-    function getCurrentUser($email = null, $password = null)
+    public function getUser($email = null, $password = null)
     {
 
         $query = "SELECT * FROM users WHERE email=:email AND password=:password ";
@@ -37,7 +27,7 @@ class UserModel
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    function createNewUser($save = null)
+    public function saveNew($save = null)
     {
         try {
             $this->conn->beginTransaction();
@@ -112,7 +102,7 @@ class UserModel
         }
         return false;
     }
-    function readOneuser($userid = null)
+    function getSingle($userid = null)
     {
         if ($userid) {
             // query to read single record

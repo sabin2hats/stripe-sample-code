@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <h2>Register to Ecommerce</h2>
-            <form action="<?= URLROOT ?>user/createNewUser" method="post">
+            <form action="<?= URLROOT ?>user/processRegisterRequest" method="post">
                 <div class="imgcontainer">
                     <!-- <img src="../assets/images/img_avatar2.png" alt="Avatar" class="avatar"> -->
                 </div>
@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="form-group" style="background-color:#f1f1f1">
-                    <p>Already have an account? <a href="<?= URLROOT ?>user/login">Sign in</a>.</p>
+                    <p>Already have an account? <a href="<?= URLROOT ?>user/">Sign in</a>.</p>
                 </div>
             </form>
         </div>

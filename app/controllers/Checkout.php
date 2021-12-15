@@ -17,13 +17,13 @@ class Checkout extends Controller
     public function index()
     {
 
-        $data['all_pdt'] = $this->productsModel->readOne($_POST['product_id']);
+        $data['all_pdt'] = $this->productsModel->getOne($_POST['product_id']);
         $data['countries'] = $this->countriesModel->getCountries();
         $data['user_det'] = [];
         $data['states'] = [];
         if (isset($_SESSION['user'])) {
             // echo $_SESSION['user']['id'];
-            $user_det = $this->userModel->readOneuser($_SESSION['user']['id']);
+            $user_det = $this->userModel->getSingle($_SESSION['user']['id']);
             $data['user_det'] = (object) $user_det;
             $data['states'] = $this->countriesModel->getStatesByCountry($data['user_det']->country_code);
         }

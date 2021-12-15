@@ -36,7 +36,7 @@ error_reporting(E_ALL);
                     <li><a href="#"><span class="glyphicon glyphicon-user"></span> <?= $_SESSION['user']['name'] ?></a></li>
                     <li><a href="<?= URLROOT ?>user/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
                 <?php } else { ?>
-                    <li><a href="<?= URLROOT ?>user/login"><span class="glyphicon glyphicon-user"></span> Sign in</a></li>
+                    <li><a href="<?= URLROOT ?>user/"><span class="glyphicon glyphicon-user"></span> Sign in</a></li>
 
                 <?php } ?>
 

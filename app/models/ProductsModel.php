@@ -10,7 +10,7 @@ class ProductsModel extends Database
         $this->conn = $db;
     }
     // read products
-    function readAll()
+    function getAll()
     {
 
         $query = "SELECT * FROM `products` where image !=''";
@@ -23,7 +23,7 @@ class ProductsModel extends Database
     }
 
     // used when filling up the update product form
-    function readOne($id = null)
+    function getOne($id = null)
     {
 
         $query = "SELECT * FROM `products` where id=" . $id . " ";
