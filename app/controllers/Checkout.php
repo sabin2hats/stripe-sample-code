@@ -9,25 +9,26 @@ class Checkout extends Controller
 {
     public function __construct()
     {
-        $this->CountriesModel = $this->model('CountriesModel');
-        $this->ProductsModel = $this->model('ProductsModel');
-        $this->UserModel = $this->model('UserModel');
+        $this->countriesModel = $this->model('CountriesModel');
+        $this->productsModel = $this->model('ProductsModel');
+        $this->userModel = $this->model('UserModel');
     }
 
     public function index()
     {
 
-        $data['all_pdt'] = $this->ProductsModel->readOne($_POST['product_id']);
-        $data['countries'] = $this->CountriesModel->getCountries();
+        $data['all_pdt'] = $this->productsModel->readOne($_POST['product_id']);
+        $data['countries'] = $this->countriesModel->getCountries();
         $data['user_det'] = [];
         $data['states'] = [];
         if (isset($_SESSION['user'])) {
             // echo $_SESSION['user']['id'];
-            $user_det = $this->UserModel->readOneuser($_SESSION['user']['id']);
+            $user_det = $this->userModel->readOneuser($_SESSION['user']['id']);
             $data['user_det'] = (object) $user_det;
-            $data['states'] = $this->CountriesModel->getStatesByCountry($data['user_det']->country_code);
+            $data['states'] = $this->countriesModel->getStatesByCountry($data['user_det']->country_code);
         }
-        $this->view('checkout/checkout.php', $data);
+        $data['body'] = 'checkout/checkout.php';
+        $this->view('template/main.php', $data);
     }
     function calculateOrderAmount($price, $quantity = 1): int
     {
@@ -46,7 +47,7 @@ class Checkout extends Controller
             // retrieve JSON from POST body
             $jsonStr = file_get_contents('php://input');
             $jsonObj = json_decode($jsonStr);
-            $all_pdt = $this->ProductsModel->readOne($jsonObj->items->pdtId);
+            $all_pdt = $this->productsModel->readOne($jsonObj->items->pdtId);
             // print_r($all_pdt);
             // die;
 
@@ -73,7 +74,7 @@ class Checkout extends Controller
     }
     function createOrder()
     {
-        $this->ProductsModel->createOrder($_POST['formdata']);
+        $this->productsModel->createOrder($_POST['formdata']);
     }
     function paymentSuccess()
     {
@@ -91,7 +92,7 @@ class Checkout extends Controller
             $orderArray['orderStatus'] = ($_GET['redirect_status'] == "succeeded") ? 'Success' : 'Failed';
             $orderArray['clientSecret'] = $paymentDetails->client_secret;
             $orderArray['id'] = $paymentDetails->id;
-            $this->ProductsModel->updateOrder($orderArray);
+            $this->productsModel->updateOrder($orderArray);
         }
 
 

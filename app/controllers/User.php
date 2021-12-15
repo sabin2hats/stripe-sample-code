@@ -6,7 +6,7 @@ class User extends Controller
     public function __construct()
     {
         $this->userModel = $this->model('UserModel');
-        $this->CountriesModel = $this->model('CountriesModel');
+        $this->countriesModel = $this->model('CountriesModel');
     }
 
     public function index()
@@ -19,27 +19,27 @@ class User extends Controller
     }
     public function login()
     {
-
-        $this->view('user/login.php');
+        if (isLoggedIn()) {
+            $this->redirect('');
+        }
+        $data['body'] = 'user/login.php';
+        $this->view('template/main.php', $data);
     }
     public function loginUser()
     {
 
 
         $user = $this->userModel->getCurrentUser($_POST['email'], $_POST['psw']);
-        // print_r($user);
-        // die;
-        if (!empty($user)) {
-            @session_start();
-            $_SESSION['user'] = $user;
-            header('Location: ' . URLROOT . 'product');
+        if (loginUser($user)) {
+            $this->redirect('');
         }
     }
     public function register()
     {
 
-        $data['countries'] = $this->CountriesModel->getCountries();
-        $this->view('user/register.php', $data);
+        $data['countries'] = $this->countriesModel->getCountries();
+        $data['body'] = 'user/register.php';
+        $this->view('template/main.php', $data);
     }
     public function createNewUser()
     {
@@ -49,14 +49,8 @@ class User extends Controller
 
     public function logout()
     {
-        if (isset($_SESSION['user'])) {
-            session_destroy();
-            header("Location: " . URLROOT . "user/login");
-            exit();
-        } else {
-            session_destroy();
-            header("Location: " . URLROOT . "user/login");
-            exit();
+        if (logoutUser()) {
+            $this->redirect('user/login');
         }
     }
 }

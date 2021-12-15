@@ -12,11 +12,10 @@ class Core
 
   public function __construct()
   {
-    //print_r($this->getUrl());
+    // print_r($this->getUrl());
 
     $url = $this->getUrl();
 
-    // Look in BLL for first value
     if (file_exists('app/controllers/' . ucwords($url[0]) . '.php')) {
       // If exists, set as controller
       $this->currentController = ucwords($url[0]);
@@ -32,11 +31,15 @@ class Core
 
     // Check for second part of url
     if (isset($url[1])) {
+
       // Check to see if method exists in controller
       if (method_exists($this->currentController, $url[1])) {
         $this->currentMethod = $url[1];
         // Unset 1 index
         unset($url[1]);
+      } else {
+        echo "404";
+        die;
       }
     }
 

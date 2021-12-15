@@ -19,4 +19,10 @@ class Controller
             die("View does not exists.");
         }
     }
+
+    public function redirect($url = null)
+    {
+        header("location: " . URLROOT . $url);
+        // echo '<script>alert("in");window.location.href = URLROOT.$url  ';
+    }
 }

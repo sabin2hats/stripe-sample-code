@@ -1,11 +1,11 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// error_reporting(E_ALL);
 class AjaxController extends Controller
 {
     public function __construct()
     {
-        $this->CountriesModel = $this->model('CountriesModel');
+        $this->countriesModel = $this->model('CountriesModel');
     }
 
     public function index()
@@ -18,7 +18,7 @@ class AjaxController extends Controller
     }
     public function getState()
     {
-        $stateList = $this->CountriesModel->getStatesByCountry($_POST['countryCode']);
+        $stateList = $this->countriesModel->getStatesByCountry($_POST['countryCode']);
         echo json_encode($stateList);
     }
 }
