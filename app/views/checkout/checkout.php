@@ -9,30 +9,30 @@
                 <h3>Shipping Address</h3>
                 <div class="form-group">
                     <label class="custom-inlabel">Name</label>
-                    <input type="text" class="form-control" name="ship_name" id="ship_name" value="<?= (!empty($data['user_det']) ? $data['user_det']->name : '') ?>" required>
+                    <input type="text" class="form-control" name="shipName" id="shipName" value="<?= (!empty($data['userDetails']) ? $data['userDetails']->name : '') ?>" required>
                     <span class="valid-address"></span>
                 </div>
                 <div class="form-group">
                     <label class="custom-inlabel">Phone</label>
-                    <input type="email" class="form-control" name="ship_phone" id="ship_phone" value="<?= (!empty($data['user_det']) ? $data['user_det']->phone : '') ?>" required>
+                    <input type="email" class="form-control" name="shipPhone" id="shipPhone" value="<?= (!empty($data['userDetails']) ? $data['userDetails']->phone : '') ?>" required>
                     <span class="valid-address"></span>
                 </div>
                 <div class="form-group">
                     <label class="custom-inlabel">Address Line1</label>
-                    <input type="text" class="form-control" name="ship_line1" id="ship_line1" value="<?= (!empty($data['user_det']) ? $data['user_det']->line1 : '') ?>" required>
+                    <input type="text" class="form-control" name="shipLine1" id="shipLine1" value="<?= (!empty($data['userDetails']) ? $data['userDetails']->line1 : '') ?>" required>
                     <span class="valid-address"></span>
                 </div>
                 <div class="form-group">
                     <label class="custom-inlabel">Address Line2</label>
-                    <input type="text" class="form-control" name="ship_line2" id="ship_line2" value="<?= (!empty($data['user_det']) ? $data['user_det']->line2 : '') ?>" required>
+                    <input type="text" class="form-control" name="shipLine2" id="shipLine2" value="<?= (!empty($data['userDetails']) ? $data['userDetails']->line2 : '') ?>" required>
                     <span class="valid-address"></span>
                 </div>
                 <div class="form-group">
                     <label class="custom-inlabel">Country</label>
-                    <select class="form-control" name="ship_country" id="ship_country" required onchange="getState(this.value,'ship_state')" required>
+                    <select class="form-control" name="shipCountry" id="shipCountry" required onchange="getState(this.value,'shipState')" required>
                         <option value="">Select</option>
                         <?php foreach ($data['countries'] as $row) { ?>
-                            <option value="<?= $row['sortname'] ?>" <?= (!empty($data['user_det']) && ($data['user_det']->country_code == $row['sortname'])) ? 'selected' : '' ?>><?= $row['name'] ?></option>
+                            <option value="<?= $row['sortname'] ?>" <?= (!empty($data['userDetails']) && ($data['userDetails']->country_code == $row['sortname'])) ? 'selected' : '' ?>><?= $row['name'] ?></option>
                         <?php } ?>
 
                     </select>
@@ -40,10 +40,10 @@
                 </div>
                 <div class="form-group">
                     <label class="custom-inlabel">State</label>
-                    <select class="form-control" name="ship_state" id="ship_state" required>
+                    <select class="form-control" name="shipState" id="shipState" required>
                         <option value="">Select</option>
                         <?php foreach ($data['states'] as $row) { ?>
-                            <option value="<?= $row['name'] ?>" <?= (!empty($data['user_det']) && ($data['user_det']->state == $row['name'])) ? 'selected' : '' ?>><?= $row['name'] ?></option>
+                            <option value="<?= $row['name'] ?>" <?= (!empty($data['userDetails']) && ($data['userDetails']->state == $row['name'])) ? 'selected' : '' ?>><?= $row['name'] ?></option>
                         <?php } ?>
                     </select>
                     <span class="valid-address"></span>
@@ -51,12 +51,12 @@
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label class="custom-inlabel">City</label>
-                        <input type="text" class="form-control" name="ship_city" id="ship_city" value="<?= (!empty($data['user_det']) ? $data['user_det']->city : '') ?>" required>
+                        <input type="text" class="form-control" name="shipCity" id="shipCity" value="<?= (!empty($data['userDetails']) ? $data['userDetails']->city : '') ?>" required>
                         <span class="valid-address"></span>
                     </div>
                     <div class="col-md-6 form-group">
                         <label class="custom-inlabel">PIN/ZIP</label>
-                        <input type="text" class="form-control" name="ship_zip" id="ship_zip" value="<?= (!empty($data['user_det']) ? $data['user_det']->zipcode : '') ?>" required>
+                        <input type="text" class="form-control" name="shipZip" id="shipZip" value="<?= (!empty($data['userDetails']) ? $data['userDetails']->zipcode : '') ?>" required>
                         <span class="valid-address"></span>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
 
             </div>
             <div class="checkbox">
-                <label><input type="checkbox" value="" id="copy_address">Use Shipping Address as Billing Address</label>
+                <label><input type="checkbox" value="" id="copyAddress">Use Shipping Address as Billing Address</label>
             </div>
         </div>
         <!-- Billing Address -->
@@ -74,27 +74,27 @@
                 <h3>Billing Address</h3>
                 <div class="form-group">
                     <label class="custom-inlabel">Name</label>
-                    <input type="text" class="form-control" name="bill_name" id="bill_name" required>
+                    <input type="text" class="form-control" name="billName" id="billName" required>
                     <span class="valid-address"></span>
                 </div>
                 <div class="form-group">
                     <label class="custom-inlabel">Phone</label>
-                    <input type="email" class="form-control" name="bill_phone" id="bill_phone" required>
+                    <input type="email" class="form-control" name="billPhone" id="billPhone" required>
                     <span class="valid-address"></span>
                 </div>
                 <div class="form-group">
                     <label class="custom-inlabel">Address Line1</label>
-                    <input type="text" class="form-control" name="bill_line1" id="bill_line1" required>
+                    <input type="text" class="form-control" name="billLine1" id="billLine1" required>
                     <span class="valid-address"></span>
                 </div>
                 <div class="form-group">
                     <label class="custom-inlabel">Address Line2</label>
-                    <input type="text" class="form-control" name="bill_line2" id="bill_line2" required>
+                    <input type="text" class="form-control" name="billLine2" id="billLine2" required>
                     <span class="valid-address"></span>
                 </div>
                 <div class="form-group">
                     <label class="custom-inlabel">Country</label>
-                    <select class="form-control" name="bill_country" id="bill_country" required onchange="getState(this.value,'bill_state')" required>
+                    <select class="form-control" name="billCountry" id="billCountry" required onchange="getState(this.value,'billState')" required>
                         <option value="">Select</option>
                         <?php foreach ($data['countries'] as $row) { ?>
                             <option value="<?= $row['sortname'] ?>"><?= $row['name'] ?></option>
@@ -105,7 +105,7 @@
                 </div>
                 <div class="form-group">
                     <label class="custom-inlabel">State</label>
-                    <select class="form-control" name="bill_state" id="bill_state" required>
+                    <select class="form-control" name="billState" id="billState" required>
                         <option value="">Select</option>
                     </select>
                     <span class="valid-address"></span>
@@ -113,12 +113,12 @@
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label class="custom-inlabel">City</label>
-                        <input type="text" class="form-control" name="bill_city" id="bill_city" required>
+                        <input type="text" class="form-control" name="billCity" id="billCity" required>
                         <span class="valid-address"></span>
                     </div>
                     <div class="col-md-6 form-group">
                         <label class="custom-inlabel">PIN/ZIP</label>
-                        <input type="text" class="form-control" name="bill_zip" id="bill_zip" required>
+                        <input type="text" class="form-control" name="billZip" id="billZip" required>
                         <span class="valid-address"></span>
                     </div>
                 </div>
@@ -128,15 +128,15 @@
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-6 form-group">
-                    <img src="<?= URLROOT ?>public/images/<?= $data['all_pdt']['image'] ?>" alt="Product Image" style="height:250px;width250px;">
+                    <img src="<?= URLROOT ?>public/images/<?= $data['allPdt']['image'] ?>" alt="Product Image" style="height:250px;width250px;">
                 </div>
                 <div class="col-md-4">
                     <div class="card">
 
-                        <h3><?= $data['all_pdt']['name'] ?></h3>
-                        <input type="hidden" id="product_id" value="<?= $data['all_pdt']['id'] ?>">
-                        <p class="price"><?= $data['all_pdt']['description'] ?></p>
-                        <p class="price">Rs <?= $data['all_pdt']['price'] ?></p>
+                        <h3><?= $data['allPdt']['name'] ?></h3>
+                        <input type="hidden" id="productId" value="<?= $data['allPdt']['id'] ?>">
+                        <p class="price"><?= $data['allPdt']['description'] ?></p>
+                        <p class="price">Rs <?= $data['allPdt']['price'] ?></p>
                         <p>
 
                     </div>
@@ -147,11 +147,11 @@
             <form id="payment-form">
                 <div class="form-group">
                     <label class="custom-inlabel">Card Holders Name</label>
-                    <input type="text" class="form-control" name="name" id="cst_name" required>
+                    <input type="text" class="form-control" name="name" id="cstName" required>
                 </div>
                 <div class="form-group">
                     <label class="custom-inlabel">Email</label>
-                    <input type="email" class="form-control" name="email" id="cst_email" required>
+                    <input type="email" class="form-control" name="email" id="cstEmail" required>
                 </div>
                 <div id="payment-element">
                     <!--Stripe.js injects the Payment Element-->

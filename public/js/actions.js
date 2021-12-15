@@ -17,7 +17,7 @@ function getState(countryCode="IN",stateDiv=null){
     }
 }
 
-$('#copy_address').change(function(){
+$('#copyAddress').change(function(){
     // alert($("#state").val());
     if ($(this).prop('checked')==true){ 
         var div = document.getElementsByClassName('shipping-div');
@@ -31,8 +31,8 @@ $('#copy_address').change(function(){
         $(div2).find('input, select, textarea').each(function() {
             // console.log($(this).val());
             $(this).val(formValues[i]);
-            if($(this).attr('id')=='bill_country'){
-                getState(formValues[i],'bill_state');
+            if($(this).attr('id')=='billCountry'){
+                getState(formValues[i],'billState');
             }
             i++;        
         });

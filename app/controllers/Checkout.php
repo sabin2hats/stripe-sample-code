@@ -16,15 +16,15 @@ class Checkout extends Controller
     public function index()
     {
 
-        $data['all_pdt'] = $this->productsModel->getOne($_POST['product_id']);
+        $data['allPdt'] = $this->productsModel->getOne($_POST['product_id']);
         $data['countries'] = $this->countriesModel->getCountries();
-        $data['user_det'] = [];
+        $data['userDetails'] = [];
         $data['states'] = [];
         if (isset($_SESSION['user'])) {
             // echo $_SESSION['user']['id'];
             $user_det = $this->userModel->getSingle($_SESSION['user']['id']);
-            $data['user_det'] = (object) $user_det;
-            $data['states'] = $this->countriesModel->getStatesByCountry($data['user_det']->country_code);
+            $data['userDetails'] = (object) $user_det;
+            $data['states'] = $this->countriesModel->getStatesByCountry($data['userDetails']->country_code);
         }
         $data['body'] = 'checkout/checkout.php';
         $this->view('template/main.php', $data);
