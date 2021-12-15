@@ -1,9 +1,4 @@
 
-// $("#payment-form").on('change', '#Field-countryInput', function() {
-//     alert("in");
-// });
-
-
 function getState(countryCode="IN",stateDiv=null){ 
     $("#"+stateDiv).html('');
     if(countryCode){
@@ -25,8 +20,8 @@ function getState(countryCode="IN",stateDiv=null){
 $('#copy_address').change(function(){
     // alert($("#state").val());
     if ($(this).prop('checked')==true){ 
-        var div = document.getElementsByClassName('shipping_div');
-        var div2 = document.getElementsByClassName('billing_div');
+        var div = document.getElementsByClassName('shipping-div');
+        var div2 = document.getElementsByClassName('billing-div');
         var i = 0 ;
         var formValues = [];
         $(div).find('input, select, textarea').each(function() {

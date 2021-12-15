@@ -1,6 +1,3 @@
-// This is your test publishable API key.
-
-// import * as configs from './config.js';
 
 const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
 
@@ -29,7 +26,6 @@ async function initialize() {
 
   elements = stripe.elements({ clientSecret });
   payIntid = id;
-  // const paymentElement = elements.create("payment");
   var paymentElement = elements.create('payment', {
     fields: {
       billingDetails: {
@@ -61,7 +57,7 @@ async function handleSubmit(e) {
   var shipCountry = document.getElementById("ship_country").value; 
   var shipState = document.getElementById("ship_state").value; 
   var shipName = document.getElementById("ship_name").value; 
-  var div = document.getElementsByClassName('panel_custom');
+  var div = document.getElementsByClassName('panel-custom');
   var i = 0 ;
   var formData={};
   formData['product_id'] = items.pdtId;
@@ -86,7 +82,7 @@ async function handleSubmit(e) {
   
     if(formData){
       $.ajax({
-        url: URLROOT+"checkout/createOrder",
+        url: URLROOT+"orders/createOrder",
         method : "POST",
         data:{formdata:JSON.stringify(formData)},
       }).done(function( data ) {
