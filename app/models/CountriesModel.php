@@ -20,7 +20,7 @@ class CountriesModel
         }
         */
 
-    function getCountries()
+    public function getCountries()
     {
 
         $query = "SELECT * FROM countries ";
@@ -32,7 +32,7 @@ class CountriesModel
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    function getStatesByCountry($countryCode = null)
+    public function getStatesByCountry($countryCode = null)
     {
         if ($countryCode) {
             $query = "SELECT name FROM states WHERE  country_code =" . "'$countryCode'";

@@ -30,7 +30,7 @@ class Checkout extends Controller
         $data['body'] = 'checkout/checkout.php';
         $this->view('template/main.php', $data);
     }
-    function calculateOrderAmount($price, $quantity = 1): int
+    public function calculateOrderAmount($price, $quantity = 1): int
     {
         // Replace this constant with a calculation of the order's amount
         // Calculate the order total on the server to prevent
@@ -47,13 +47,13 @@ class Checkout extends Controller
             // retrieve JSON from POST body
             $jsonStr = file_get_contents('php://input');
             $jsonObj = json_decode($jsonStr);
-            $all_pdt = $this->productsModel->readOne($jsonObj->items->pdtId);
+            $allPdt = $this->productsModel->readOne($jsonObj->items->pdtId);
             // print_r($all_pdt);
             // die;
 
             // Create a PaymentIntent with amount and currency
             $paymentIntent = \Stripe\PaymentIntent::create([
-                'amount' => $this->calculateOrderAmount($all_pdt['price'], 1),
+                'amount' => $this->calculateOrderAmount($allPdt['price'], 1),
                 'currency' => 'inr',
                 'automatic_payment_methods' => [
                     'enabled' => true,
@@ -72,11 +72,11 @@ class Checkout extends Controller
             echo json_encode(['error' => $e->getMessage()]);
         }
     }
-    function createOrder()
+    public function createOrder()
     {
         $this->productsModel->createOrder($_POST['formdata']);
     }
-    function paymentSuccess()
+    public function paymentSuccess()
     {
 
         $stripe = new \Stripe\StripeClient(STRIPE_API_KEY);

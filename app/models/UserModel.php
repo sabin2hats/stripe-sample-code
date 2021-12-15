@@ -102,7 +102,7 @@ class UserModel
         }
         return false;
     }
-    function getSingle($userid = null)
+    public function getSingle($userid = null)
     {
         if ($userid) {
             // query to read single record

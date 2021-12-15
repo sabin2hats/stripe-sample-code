@@ -10,7 +10,7 @@ class ProductsModel extends Database
         $this->conn = $db;
     }
     // read products
-    function getAll()
+    public function getAll()
     {
 
         $query = "SELECT * FROM `products` where image !=''";
@@ -23,7 +23,7 @@ class ProductsModel extends Database
     }
 
     // used when filling up the update product form
-    function getOne($id = null)
+    public function getOne($id = null)
     {
 
         $query = "SELECT * FROM `products` where id=" . $id . " ";
@@ -32,7 +32,7 @@ class ProductsModel extends Database
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row;
     }
-    function createOrder($formDatastr = null)
+    public function createOrder($formDatastr = null)
     {
 
         $formData = json_decode($formDatastr);
@@ -114,7 +114,7 @@ class ProductsModel extends Database
         }
         return false;
     }
-    function updateOrder($data)
+    public function updateOrder($data)
     {
         if (!empty($data)) {
             // $stmt = $this->conn->prepare("UPDATE order_details SET order_amount = ':order_amount',client_secret=':client_secret',order_status=':order_status' 
