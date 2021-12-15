@@ -31,42 +31,35 @@ class UserModel
     {
         try {
             $this->conn->beginTransaction();
-            // query to insert record
-
             $query = "INSERT INTO
                 users
             SET
                 name=:name, email=:email, phone=:phone, password=:password ,created_at=:created_at";
 
-            // prepare query
             $stmt = $this->conn->prepare($query);
 
-            // sanitize
             $name = sanitize($save['name']);
             $email = sanitize($save['email']);
             $phone = sanitize($save['phone']);
             $password = sha1($save['psw']);
 
-            // bind values
             $stmt->bindParam(":name", $name);
             $stmt->bindParam(":email", $email);
             $stmt->bindParam(":phone", $phone);
             $stmt->bindParam(":password", $password);
             $stmt->bindParam(":created_at", date('Y-m-d'));
-            // execute query
+
             $stmt->execute();
 
             $id = $this->conn->lastInsertId();
-            // $id = 1;
+
             $query2 = "INSERT INTO
                 user_address
             SET
                 user_id=:user_id, line1=:line1, line2=:line2, country_code=:country_code ,state=:state,city=:city,zipcode=:zipcode";
 
-            // prepare query
             $stmt2 = $this->conn->prepare($query2);
 
-            // sanitize
             $line1 = sanitize($save['line1']);
             $line2 = sanitize($save['line2']);
             $country_code = sanitize($save['country']);
@@ -74,7 +67,7 @@ class UserModel
             $city = sanitize($save['city']);
             $zipcode = sanitize($save['zipcode']);
 
-            // bind values
+
             $stmt2->bindParam(":user_id", $id);
             $stmt2->bindParam(":line1", $line1);
             $stmt2->bindParam(":line2", $line2);
@@ -105,17 +98,11 @@ class UserModel
     public function getSingle($userid = null)
     {
         if ($userid) {
-            // query to read single record
             $query = "SELECT * FROM `users` u
             LEFT JOIN user_address ua ON ua.user_id = u.id 
             where u.id=" . $userid . " ";
-
-            // prepare query statement
             $stmt = $this->conn->prepare($query);
-            // execute query
             $stmt->execute();
-
-            // get retrieved row
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             return $row;

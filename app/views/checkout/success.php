@@ -2,7 +2,7 @@
     <h2>Payment Status</h2>
     <?php if ($_GET['redirect_status'] == 'succeeded') { ?>
         <div class="alert alert-success">
-            <strong>Success!</strong> Your Payment is Success.
+            <strong>Success!</strong> Your order is Placed.
         </div>
     <?php } else { ?>
 

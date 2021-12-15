@@ -1,8 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
-// This is your test secret API key.
+// ini_set('display_errors', 1);
+// error_reporting(E_ALL);
 
 \Stripe\Stripe::setApiKey(STRIPE_API_KEY);
 class Checkout extends Controller
@@ -12,6 +10,7 @@ class Checkout extends Controller
         $this->countriesModel = $this->model('CountriesModel');
         $this->productsModel = $this->model('ProductsModel');
         $this->userModel = $this->model('UserModel');
+        $this->ordersModel = $this->model('OrdersModel');
     }
 
     public function index()
@@ -32,11 +31,7 @@ class Checkout extends Controller
     }
     public function calculateOrderAmount($price, $quantity = 1): int
     {
-        // Replace this constant with a calculation of the order's amount
-        // Calculate the order total on the server to prevent
-        // people from directly manipulating the amount on the client
         return $price * $quantity * 100;
-        // return 1400;
     }
 
     public function createIntent()
@@ -47,7 +42,7 @@ class Checkout extends Controller
             // retrieve JSON from POST body
             $jsonStr = file_get_contents('php://input');
             $jsonObj = json_decode($jsonStr);
-            $allPdt = $this->productsModel->readOne($jsonObj->items->pdtId);
+            $allPdt = $this->productsModel->getOne($jsonObj->items->pdtId);
             // print_r($all_pdt);
             // die;
 
@@ -72,10 +67,7 @@ class Checkout extends Controller
             echo json_encode(['error' => $e->getMessage()]);
         }
     }
-    public function createOrder()
-    {
-        $this->productsModel->createOrder($_POST['formdata']);
-    }
+
     public function paymentSuccess()
     {
 
@@ -88,14 +80,13 @@ class Checkout extends Controller
         if (!empty($paymentDetails)) {
             // echo '<pre>';
             // print_r($paymentDetails);
-            $orderArray['orderAmount'] = $paymentDetails->amount;
+            $orderArray['orderAmount'] = ($paymentDetails->amount) / 100;
             $orderArray['orderStatus'] = ($_GET['redirect_status'] == "succeeded") ? 'Success' : 'Failed';
             $orderArray['clientSecret'] = $paymentDetails->client_secret;
             $orderArray['id'] = $paymentDetails->id;
-            $this->productsModel->updateOrder($orderArray);
+            $this->ordersModel->updateOrder($orderArray);
         }
-
-
-        $this->view('checkout/success.php');
+        $data['body'] = 'checkout/success.php';
+        $this->view('template/main.php', $data);
     }
 }

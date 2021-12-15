@@ -5,7 +5,7 @@
         <!-- Shipping Address -->
 
         <div class="col-md-4">
-            <div class="panel panel-default panel-custom shipping_div">
+            <div class="panel panel-default panel-custom shipping-div">
                 <h3>Shipping Address</h3>
                 <div class="form-group">
                     <label class="custom-inlabel">Name</label>
@@ -70,7 +70,7 @@
         <!-- Billing Address -->
 
         <div class="col-md-4">
-            <div class="panel panel-default panel-custom billing_div">
+            <div class="panel panel-default panel-custom billing-div">
                 <h3>Billing Address</h3>
                 <div class="form-group">
                     <label class="custom-inlabel">Name</label>
