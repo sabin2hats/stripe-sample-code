@@ -13,6 +13,7 @@ class Core
   public function __construct()
   {
     // print_r($this->getUrl());
+    // die;
 
     $url = $this->getUrl();
 
@@ -42,6 +43,7 @@ class Core
         die;
       }
     }
+
 
     // Get params
     $this->params = $url ? array_values($url) : [];

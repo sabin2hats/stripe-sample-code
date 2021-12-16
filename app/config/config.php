@@ -14,6 +14,11 @@ define('URLROOT', 'http://localhost/StripeMVC/');
 //Sitename
 define('SITENAME', 'Stripe MVC');
 
+
+define('PAYMENT_SERVICE', 'stripeCheckout');
+// define('PAYMENT_SUCCESS', 'StripeSuccess');
+// define('PAYMENT_SUCCESS', 'StripeSuccess');
+
 define('STRIPE_API_KEY', 'sk_test_51K3xsPSDQHE9e11yXhRc6GhtcjmahbH4mJek20PfyIT1fnnS2KAm3CmHMZ7ZXlYA885qR3Q4bUpUmKAhOTjT6OUA00IQc1OG1l');
 define('STRIPE_PUBLISHABLE_KEY', 'pk_test_51K3xsPSDQHE9e11yo66oFzwlAEETm1OQKpr60hoI2BcZTQU0G2AW5K1XytzTh8NjTNYBex1e0fFJFg8TM1l9QHv500JKgkzf5j');
 define('STRIPE_SUCCESS_URL', URLROOT . 'checkout/paymentSuccess'); //Payment success URL 
