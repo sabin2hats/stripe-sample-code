@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?= URLROOT ?>public/css/<?= PAYMENT_SERVICE ?>.css" />
+<link rel="stylesheet" href="<?= URLROOT ?>public/css/<?= CHECKOUT_SCRIPT ?>.css" />
 <div class="col-md-10 col-md-offset-1">
     <div class="row">
 
@@ -167,5 +167,5 @@
 </div>
 
 
-<script src="<?= URLROOT ?>public/js/<?= PAYMENT_SERVICE ?>.js" defer></script>
+<script src="<?= URLROOT ?>public/js/<?= CHECKOUT_SCRIPT ?>.js" defer></script>
 <script src="https://js.stripe.com/v3/"></script>

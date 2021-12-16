@@ -19,7 +19,7 @@ document
 
 // Fetches a payment intent and captures the client secret
 async function initialize() {
-  const { clientSecret,id } = await fetch(URLROOT+"app/services/payments/StripePayment.php", {
+  const { clientSecret,id } = await fetch(URLROOT+"checkout/initializePayment", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ items }),
@@ -97,7 +97,7 @@ async function handleSubmit(e) {
     elements,
     confirmParams: {
       // Make sure to change this to your payment completion page
-      return_url: STRIPE_SUCCESS_URL,
+      return_url: PAYPAL_SUCCESS_URL,
       payment_method_data: {
         billing_details: {
           name: cstName,

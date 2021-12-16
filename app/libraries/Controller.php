@@ -25,4 +25,14 @@ class Controller
         header("location: " . URLROOT . $url);
         // echo '<script>alert("in");window.location.href = URLROOT.$url  ';
     }
+
+    public function service($service = null)
+    {
+
+        require_once 'app/services/' . $service . '.php';
+        //Instantiate model
+        $service = explode('/', filter_var($service, FILTER_SANITIZE_URL));
+        $service = end($service);
+        return new $service;
+    }
 }

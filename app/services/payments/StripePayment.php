@@ -1,46 +1,63 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-require_once '../../../vendor/autoload.php';
-require_once '../../models/ProductsModel.php';
-$productsModel = new ProductsModel();
-
 
 // This is your test secret API key.
 \Stripe\Stripe::setApiKey(STRIPE_API_KEY);
-
-function calculateOrderAmount($price, $quantity = 1): int
+class StripePayment implements PaymentsInterface
 {
-    return $price * $quantity * 100;
-}
+    function test()
+    {
+        echo "HAI";
+        die;
+    }
 
-header('Content-Type: application/json');
+    public function calculateOrderAmount($price, $quantity = 1): int
+    {
+        return $price * $quantity * 100;
+    }
 
-try {
-    // retrieve JSON from POST body
-    $jsonStr = file_get_contents('php://input');
-    $jsonObj = json_decode($jsonStr);
-    $allPdt = $productsModel->getOne($jsonObj->items->pdtId);
-    // print_r($all_pdt);
-    // die;
 
-    // Create a PaymentIntent with amount and currency
-    $paymentIntent = \Stripe\PaymentIntent::create([
-        'amount' => calculateOrderAmount($allPdt['price'], 1),
-        'currency' => 'inr',
-        'automatic_payment_methods' => [
-            'enabled' => true,
-        ],
 
-    ]);
+    public function createIntent($price = null)
+    {
+        header('Content-Type: application/json');
 
-    $output = [
-        'clientSecret' => $paymentIntent->client_secret,
-        'id' => $paymentIntent->id
-    ];
+        try {
 
-    echo json_encode($output);
-} catch (Error $e) {
-    http_response_code(500);
-    echo json_encode(['error' => $e->getMessage()]);
+            // Create a PaymentIntent with amount and currency
+            $paymentIntent = \Stripe\PaymentIntent::create([
+                'amount' => $this->calculateOrderAmount($price, 1),
+                'currency' => 'inr',
+                'automatic_payment_methods' => [
+                    'enabled' => true,
+                ],
+
+            ]);
+
+            $output = [
+                'clientSecret' => $paymentIntent->client_secret,
+                'id' => $paymentIntent->id
+            ];
+
+            echo json_encode($output);
+        } catch (Error $e) {
+            http_response_code(500);
+            echo json_encode(['error' => $e->getMessage()]);
+        }
+    }
+    public function paymentDetails($paymentIntent = null)
+    {
+        try {
+            $stripe = new \Stripe\StripeClient(STRIPE_API_KEY);
+            $paymentDetails = $stripe->paymentIntents->retrieve(
+                $paymentIntent,
+                []
+            );
+            return $paymentDetails;
+        } catch (Error $e) {
+            // http_response_code(500);
+            echo json_encode(['error' => $e->getMessage()]);
+        }
+    }
 }

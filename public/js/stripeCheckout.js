@@ -19,7 +19,7 @@ document
 
 // Fetches a payment intent and captures the client secret
 async function initialize() {
-  const { clientSecret,id } = await fetch(URLROOT+"app/services/payments/StripePayment.php", {
+  const { clientSecret,id } = await fetch(URLROOT+"checkout/initializePayment", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ items }),
