@@ -9,6 +9,23 @@ class OrdersModel extends Database
         $db = $database->dbConnect();
         $this->conn = $db;
     }
+    public function getAll()
+    {
+        try {
+
+            $query = "SELECT a.*,c.name as country_name,p.name as product_name FROM `order_details` a
+            JOIN `products` p ON p.id = a.product_id
+            JOIN `countries` c ON c.sortname = a.ship_country";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $allorders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            // print_r($allorders);
+            // die;
+            return $allorders;
+        } catch (PDOException $e) {
+            return 'Message: ' . $e->getMessage();
+        }
+    }
     public function createOrder($formDatastr = null)
     {
         $formData = json_decode($formDatastr);

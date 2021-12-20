@@ -38,3 +38,14 @@ $('#copyAddress').change(function(){
         });
     }
 })
+function showRiskStatus(id = null){
+    var riskDet = $("#riskID"+id).val();
+    var riskData = JSON.parse(riskDet);
+    console.log(riskData);
+    $(".risk-p").text('');
+    $("#validEmail").text(riskData.validEmail);
+    $("#validateDomain").text(riskData.validateDomain);
+    $("#redListedEmail").text(riskData.redListedEmail);
+    $("#validAddress").text(riskData.validAddress);
+    $("#myModal").modal();
+}
