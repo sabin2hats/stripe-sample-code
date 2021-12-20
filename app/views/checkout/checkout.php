@@ -2,6 +2,67 @@
 <div class="col-md-10 col-md-offset-1">
     <div class="row">
 
+
+        <!-- Billing Address -->
+
+        <div class="col-md-4">
+            <div class="panel panel-default panel-custom billing-div">
+                <h3>Billing Address</h3>
+                <div class="form-group">
+                    <label class="custom-inlabel">Name</label>
+                    <input type="text" class="form-control" name="billName" id="billName" required value="<?= (!empty($data['userDetails']) ? $data['userDetails']->name : '') ?>">
+                    <span class="valid-address"></span>
+                </div>
+                <div class="form-group">
+                    <label class="custom-inlabel">Phone</label>
+                    <input type="text" class="form-control" name="billPhone" id="billPhone" required value="<?= (!empty($data['userDetails']) ? $data['userDetails']->phone : '') ?>">
+                    <span class="valid-address"></span>
+                </div>
+                <div class="form-group">
+                    <label class="custom-inlabel">Address Line1</label>
+                    <input type="text" class="form-control" name="billLine1" id="billLine1" required value="<?= (!empty($data['userDetails']) ? $data['userDetails']->line1 : '') ?>">
+                    <span class="valid-address"></span>
+                </div>
+                <div class="form-group">
+                    <label class="custom-inlabel">Address Line2 ( optional )</label>
+                    <input type="text" class="form-control" name="billLine2" id="billLine2" value="<?= (!empty($data['userDetails']) ? $data['userDetails']->line2 : '') ?>">
+                    <span class="valid-address"></span>
+                </div>
+                <div class="form-group">
+                    <label class="custom-inlabel">Country</label>
+                    <select class="form-control" name="billCountry" id="billCountry" required onchange="getState(this.value,'billState')" required>
+                        <option value="">Select</option>
+                        <?php foreach ($data['countries'] as $row) { ?>
+                            <option value="<?= $row['sortname'] ?>" <?= (!empty($data['userDetails']) && ($data['userDetails']->country_code == $row['sortname'])) ? 'selected' : '' ?>><?= $row['name'] ?></option>
+                        <?php } ?>
+
+                    </select>
+                    <span class="valid-address"></span>
+                </div>
+                <div class="form-group">
+                    <label class="custom-inlabel">State</label>
+                    <select class="form-control" name="billState" id="billState" required>
+                        <option value="">Select</option>
+                        <?php foreach ($data['states'] as $row) { ?>
+                            <option value="<?= $row['name'] ?>" <?= (!empty($data['userDetails']) && ($data['userDetails']->state == $row['name'])) ? 'selected' : '' ?>><?= $row['name'] ?></option>
+                        <?php } ?>
+                    </select>
+                    <span class="valid-address"></span>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label class="custom-inlabel">City</label>
+                        <input type="text" class="form-control" name="billCity" id="billCity" required value="<?= (!empty($data['userDetails']) ? $data['userDetails']->city : '') ?>">
+                        <span class="valid-address"></span>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label class="custom-inlabel">PIN/ZIP</label>
+                        <input type="text" class="form-control" name="billZip" id="billZip" required value="<?= (!empty($data['userDetails']) ? $data['userDetails']->zipcode : '') ?>">
+                        <span class="valid-address"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Shipping Address -->
 
         <div class="col-md-4">
@@ -64,64 +125,7 @@
 
             </div>
             <div class="checkbox">
-                <label><input type="checkbox" value="" id="copyAddress">Use Shipping Address as Billing Address</label>
-            </div>
-        </div>
-        <!-- Billing Address -->
-
-        <div class="col-md-4">
-            <div class="panel panel-default panel-custom billing-div">
-                <h3>Billing Address</h3>
-                <div class="form-group">
-                    <label class="custom-inlabel">Name</label>
-                    <input type="text" class="form-control" name="billName" id="billName" required>
-                    <span class="valid-address"></span>
-                </div>
-                <div class="form-group">
-                    <label class="custom-inlabel">Phone</label>
-                    <input type="text" class="form-control" name="billPhone" id="billPhone" required>
-                    <span class="valid-address"></span>
-                </div>
-                <div class="form-group">
-                    <label class="custom-inlabel">Address Line1</label>
-                    <input type="text" class="form-control" name="billLine1" id="billLine1" required>
-                    <span class="valid-address"></span>
-                </div>
-                <div class="form-group">
-                    <label class="custom-inlabel">Address Line2 ( optional )</label>
-                    <input type="text" class="form-control" name="billLine2" id="billLine2">
-                    <span class="valid-address"></span>
-                </div>
-                <div class="form-group">
-                    <label class="custom-inlabel">Country</label>
-                    <select class="form-control" name="billCountry" id="billCountry" required onchange="getState(this.value,'billState')" required>
-                        <option value="">Select</option>
-                        <?php foreach ($data['countries'] as $row) { ?>
-                            <option value="<?= $row['sortname'] ?>"><?= $row['name'] ?></option>
-                        <?php } ?>
-
-                    </select>
-                    <span class="valid-address"></span>
-                </div>
-                <div class="form-group">
-                    <label class="custom-inlabel">State</label>
-                    <select class="form-control" name="billState" id="billState" required>
-                        <option value="">Select</option>
-                    </select>
-                    <span class="valid-address"></span>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label class="custom-inlabel">City</label>
-                        <input type="text" class="form-control" name="billCity" id="billCity" required>
-                        <span class="valid-address"></span>
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label class="custom-inlabel">PIN/ZIP</label>
-                        <input type="text" class="form-control" name="billZip" id="billZip" required>
-                        <span class="valid-address"></span>
-                    </div>
-                </div>
+                <label><input type="checkbox" value="" id="copyAddress">Use Shipping Address same as Billing Address</label>
             </div>
         </div>
         <!-- Display a payment form -->
