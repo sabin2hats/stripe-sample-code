@@ -22,10 +22,10 @@
                 </div>
                 <div class="form-group">
                     <label>Address Line1</label>
-                    <input type="text" class="form-control" name="line1" id="line1">
+                    <input type="text" class="form-control" name="line1" id="line1" required>
                 </div>
                 <div class="form-group">
-                    <label>Address Line2</label>
+                    <label>Address Line2 (optional) </label>
                     <input type="text" class="form-control" name="line2" id="line2">
                 </div>
                 <div class="form-group">
@@ -46,11 +46,11 @@
                 </div>
                 <div class="form-group">
                     <label>City</label>
-                    <input type="text" class="form-control" name="city" id="city">
+                    <input type="text" class="form-control" name="city" id="city" required>
                 </div>
                 <div class="form-group">
                     <label>PIN/ZIP</label>
-                    <input type="text" class="form-control" name="zipcode" id="zipcode">
+                    <input type="text" class="form-control" name="zipcode" id="zipcode" required>
                 </div>
 
                 <div class="form-group">

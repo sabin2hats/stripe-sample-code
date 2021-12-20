@@ -14,7 +14,7 @@
                 </div>
                 <div class="form-group">
                     <label class="custom-inlabel">Phone</label>
-                    <input type="email" class="form-control" name="shipPhone" id="shipPhone" value="<?= (!empty($data['userDetails']) ? $data['userDetails']->phone : '') ?>" required>
+                    <input type="text" class="form-control" name="shipPhone" id="shipPhone" value="<?= (!empty($data['userDetails']) ? $data['userDetails']->phone : '') ?>" required>
                     <span class="valid-address"></span>
                 </div>
                 <div class="form-group">
@@ -23,8 +23,8 @@
                     <span class="valid-address"></span>
                 </div>
                 <div class="form-group">
-                    <label class="custom-inlabel">Address Line2</label>
-                    <input type="text" class="form-control" name="shipLine2" id="shipLine2" value="<?= (!empty($data['userDetails']) ? $data['userDetails']->line2 : '') ?>" required>
+                    <label class="custom-inlabel">Address Line2( optional )</label>
+                    <input type="text" class="form-control" name="shipLine2" id="shipLine2" value="<?= (!empty($data['userDetails']) ? $data['userDetails']->line2 : '') ?>">
                     <span class="valid-address"></span>
                 </div>
                 <div class="form-group">
@@ -79,7 +79,7 @@
                 </div>
                 <div class="form-group">
                     <label class="custom-inlabel">Phone</label>
-                    <input type="email" class="form-control" name="billPhone" id="billPhone" required>
+                    <input type="text" class="form-control" name="billPhone" id="billPhone" required>
                     <span class="valid-address"></span>
                 </div>
                 <div class="form-group">
@@ -88,8 +88,8 @@
                     <span class="valid-address"></span>
                 </div>
                 <div class="form-group">
-                    <label class="custom-inlabel">Address Line2</label>
-                    <input type="text" class="form-control" name="billLine2" id="billLine2" required>
+                    <label class="custom-inlabel">Address Line2 ( optional )</label>
+                    <input type="text" class="form-control" name="billLine2" id="billLine2">
                     <span class="valid-address"></span>
                 </div>
                 <div class="form-group">

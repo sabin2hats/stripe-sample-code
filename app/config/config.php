@@ -15,8 +15,8 @@ define('URLROOT', 'http://localhost/StripeMVC/');
 define('SITENAME', 'Stripe MVC');
 
 
-define('PAYMENT_SERVICE', 'payments/PaypalPayment');
-define('CHECKOUT_SCRIPT', 'paypalCheckout');
+define('PAYMENT_SERVICE', 'payments/StripePayment');
+define('CHECKOUT_SCRIPT', 'stripeCheckout');
 // define('PAYMENT_SUCCESS', 'StripeSuccess');
 // define('PAYMENT_SUCCESS', 'StripeSuccess');
 

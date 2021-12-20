@@ -55,7 +55,7 @@ class Checkout extends Controller
             $orderArray['orderStatus'] = ($_GET['redirect_status'] == "succeeded") ? 'Success' : 'Failed';
             $orderArray['clientSecret'] = $paymentDetails->client_secret;
             $orderArray['id'] = $paymentDetails->id;
-            $this->ordersModel->updateOrder($orderArray);
+            $this->ordersModel->updateOrderStatus($orderArray);
         }
 
         $data['body'] = 'checkout/success.php';

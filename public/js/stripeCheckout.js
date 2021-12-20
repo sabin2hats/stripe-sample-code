@@ -65,9 +65,10 @@ async function handleSubmit(e) {
   formData['email'] = cstEmail;
   formData['payment_intent'] = payIntid;
   formData['client_secret'] = '';
+  var optional = ['shipLine2','billLine2'];
   $(div).find('input, select, textarea').each(function() {
     // console.log($(this).val());
-    if(!$(this).val()){
+    if(!$(this).val() && !optional.includes($(this).attr('id'))){
       var text = $(this).siblings('label').text();
       $(this).siblings('span').text("The "+text+" is Required");
       i++;

@@ -41,11 +41,12 @@ $('#copyAddress').change(function(){
 function showRiskStatus(id = null){
     var riskDet = $("#riskID"+id).val();
     var riskData = JSON.parse(riskDet);
-    console.log(riskData);
+    // console.log(riskData);
     $(".risk-p").text('');
-    $("#validEmail").text(riskData.validEmail);
-    $("#validateDomain").text(riskData.validateDomain);
-    $("#redListedEmail").text(riskData.redListedEmail);
-    $("#validAddress").text(riskData.validAddress);
+    $("#riskStatus").text(riskData.riskStatus+'%');
+    $("#validEmail").text(riskData.emailStructure).css("color" , ((riskData.emailStructure=="Invalid")?"red":"green"));
+    $("#validateDomain").text(riskData.emailDomain).css("color" , ((riskData.emailDomain=="Invalid")?"red":"green"));
+    $("#redListedEmail").text(riskData.emailRedlisted).css("color" , ((riskData.emailRedlisted=="Yes")?"red":"green"));
+    $("#validAddress").text(riskData.validShippingAddress).css("color" , ((riskData.validShippingAddress=="No")?"red":"green"));
     $("#myModal").modal();
 }
